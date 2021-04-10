@@ -1,6 +1,6 @@
 {
-  "name": "Color Maid",
-  "description" : "This is not at all a knockoff of an existing color picker extension.",
+  "name": "Iconator",
+  "description": "Grab any image from a webpage and create an icon",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
@@ -24,4 +24,3 @@
   },
   "options_page": "options.html"
 }
-

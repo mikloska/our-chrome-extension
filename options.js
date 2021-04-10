@@ -2,7 +2,7 @@ let page = document.getElementById("buttonDiv");
 let selectedClassName = "current";
 const presetButtonColors = ["#3aa757", "#e8453c", "#f9bb2d", "#4688f1"];
 
-// Reacts to a button click by marking the selected button and saving
+// Reacts to a button click by marking marking the selected button and saving
 // the selection
 function handleButtonClick(event) {
   // Remove styling from the previously selected color
@@ -23,9 +23,10 @@ function handleButtonClick(event) {
 function constructOptions(buttonColors) {
   chrome.storage.sync.get("color", (data) => {
     let currentColor = data.color;
+
     // For each color we were provided…
     for (let buttonColor of buttonColors) {
-      // …create a button with that color…
+      // …crate a button with that color…
       let button = document.createElement("button");
       button.dataset.color = buttonColor;
       button.style.backgroundColor = buttonColor;
@@ -44,3 +45,27 @@ function constructOptions(buttonColors) {
 
 // Initialize the page by constructing the color options
 constructOptions(presetButtonColors);
+
+// Display the photos in the dimensions of an icon
+function constructIcons() {
+  chrome.storage.sync.get('imgUrl', (data) => {
+    console.log(data.imgUrl);
+    for (const imgUrl of data.imgUrl) {
+      const div = document.createElement('div');
+      const img = new Image();
+      img.src = imgUrl;
+      img.width = 128;
+      img.height = 128;    
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      img.addEventListener('load', e => {
+        ctx.drawImage(img, 0, 0, 128, 128);
+      })
+      // div.appendChild(img);
+      div.appendChild(canvas);
+      document.body.appendChild(div);
+    }
+  });
+}
+
+constructIcons();
